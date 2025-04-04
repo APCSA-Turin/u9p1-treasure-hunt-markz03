@@ -64,9 +64,33 @@ public class Grid {
     }
     
     public void gameover(){ //use this method to display a loss
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (!(grid[i][j] instanceof Player)) {
+                    System.out.print("❌");;
+                }
+                else {
+                    System.out.print("🐒");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("----- Game Over -----");
     }
 
     public void win(){ //use this method to display a win 
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (!(grid[i][j] instanceof Player)) {
+                    System.out.print("🥳");;
+                }
+                else {
+                    System.out.print("🐒");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("----- You Win -----");
     }
 
 

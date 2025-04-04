@@ -35,6 +35,7 @@ public class Game{
         Scanner scanner = new Scanner(System.in);
         String direction = "";
 
+        // Loops until either play runs out of lives, wins, or chooses to quit
         while(!direction.equals("q") && player.getLives() != 0 && !player.getWin()){
             try {
                 Thread.sleep(100); // Wait for 1/10 seconds
@@ -45,14 +46,16 @@ public class Game{
 
             grid.display();
             
+            // Prints out player data/attributes
             System.out.println(player.getCoords());
             System.out.println(player.getRowCol(size));
             System.out.println("Lives remaining: " + player.getLives());
             System.out.println("Treasure collected: " + player.getTreasureCount());
+            // Gets player input
             System.out.print("Enter a direction (w,a,s,d) or 'q' to exit: " );
             direction = scanner.nextLine();
 
-
+            // Used to determine type of object where player will move to
             int rowChange = 0;
             int colChange = 0;
             if (direction.equals("w")) {
@@ -68,6 +71,7 @@ public class Game{
                 colChange = 1;
             }
             
+            // player movement, interaction, and placing player on grid
             if (player.isValid(size, direction)) {
                 player.interact(size, direction, 2, grid.getGrid()[size - 1 - player.getY() + rowChange][player.getX() + colChange]);
                 if (grid.getGrid()[size - 1 - player.getY() + rowChange][player.getX() + colChange] instanceof Trophy && player.getTreasureCount() == treasures.length) {
@@ -81,35 +85,13 @@ public class Game{
             }
         }
         
+        // win/lose screen
         clearScreen();
         if (!player.getWin() || player.getLives() == 0) {
-            
-            for (int i = 0; i < grid.getGrid().length; i++) {
-                for (int j = 0; j < grid.getGrid()[i].length; j++) {
-                    if (!(grid.getGrid()[i][j] instanceof Player)) {
-                        System.out.print("❌");;
-                    }
-                    else {
-                        System.out.print("🐒");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println("----- Game Over -----");
+            grid.gameover();
         }
         else if (player.getWin()) {
-            for (int i = 0; i < grid.getGrid().length; i++) {
-                for (int j = 0; j < grid.getGrid()[i].length; j++) {
-                    if (!(grid.getGrid()[i][j] instanceof Player)) {
-                        System.out.print("🥳");;
-                    }
-                    else {
-                        System.out.print("🐒");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println("----- You Win -----");
+            grid.win();
         }
 
         scanner.close();

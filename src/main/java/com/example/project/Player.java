@@ -6,10 +6,10 @@ public class Player extends Sprite {
     private int numLives;
     private boolean win;
 
-    public Player(int x, int y) { //set treasureCount = 0 and numLives = 2
+    public Player(int x, int y, int numLives) { //set treasureCount = 0 and numLives = 2
         super(x, y);
         treasureCount = 0;
-        numLives = 2;
+        this.numLives = numLives;
         win = false;
     }
 
@@ -23,6 +23,7 @@ public class Player extends Sprite {
   
     //move method should override parent class, sprite
     public void move(String direction) { //move the (x,y) coordinates of the player
+        // increments player X or Y depending on the direction parameter
         if (direction.equals("w")) {
             super.setY(getY() + 1);
         }
@@ -40,12 +41,15 @@ public class Player extends Sprite {
 
     public void interact(int size, String direction, int numTreasures, Object obj) { // interact with an object in the position you are moving to 
         //numTreasures is the total treasures at the beginning of the game
+        // loses a life when player interacts with enemy
         if (obj instanceof Enemy) {
             numLives--;
         }
+        // treasureCount increments by 1 when player interacts with a treasure
         else if (obj instanceof Treasure && !(obj instanceof Trophy)) {
             treasureCount++;
         }
+        // player wins if they have collected all the treasures and interacts with trophy
         else if (numTreasures == treasureCount && obj instanceof Trophy) {
             win = true;
         }
@@ -54,6 +58,7 @@ public class Player extends Sprite {
 
 
     public boolean isValid(int size, String direction){ //check grid boundaries
+        // returns true if player can still move
         if (direction.equals("w") && getY() < size - 1) {
             return true;
         }
@@ -67,7 +72,7 @@ public class Player extends Sprite {
             return true;
         }
 
-
+        // if can't move, return false
         return false;
     }
 
