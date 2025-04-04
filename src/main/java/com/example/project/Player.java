@@ -6,10 +6,10 @@ public class Player extends Sprite {
     private int numLives;
     private boolean win;
 
-    public Player(int x, int y, int numLives) { //set treasureCount = 0 and numLives = 2
+    public Player(int x, int y) { //set treasureCount = 0 and numLives = 2
         super(x, y);
         treasureCount = 0;
-        this.numLives = numLives;
+        this.numLives = 2;
         win = false;
     }
 
